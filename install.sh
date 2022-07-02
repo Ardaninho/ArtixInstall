@@ -1,15 +1,32 @@
 #!/bin/sh
+echo "Welcome to Artix Linux install script!"
+echo "            'o'
+                 'ooo'
+                'ooxoo'
+               'ooxxxoo'
+              'oookkxxoo'
+             'oiioxkkxxoo'
+            ':;:iiiioxxxoo'
+               `'.;::ioxxoo'
+          '-.      `':;jiooo'
+         'oooio-..     `'i:io'
+        'ooooxxxxoio:,.   `'-;'
+       'ooooxxxxxkkxoooIi:-.  `'
+      'ooooxxxxxkkkkxoiiiiiji'
+     'ooooxxxxxkxxoiiii:'`     .i'
+    'ooooxxxxxoi:::'`       .;ioxo'
+   'ooooxooi::'`         .:iiixkxxo'
+  'ooooi:'`                `'';ioxxo'
+ 'i:'`                          '':io'
+'`                                   `'"
 echo "Checking for internet connection..."
 ping -c 4 gnu.org
 echo "Test succesful."
 lsblk
-echo "What is your swap partition? ex /dev/sda1"
-read -r swappart
-echo "What is your boot partition? ex /dev/sda2"
-read -r bootpart
-echo "What is your root partition? ex /dev/sda3"
-read -r rootpart
-echo -n "Your partitions will be formatted. ARE YOU SURE THAT YOU WANNA FORMAT YOUT PARTITIONS? (Y/N) " && read formatforsure
+echo "What is your swap partition? ex /dev/sda1" && read swappart
+echo "What is your boot partition? ex /dev/sda2" && read bootpart
+echo "What is your root partition? ex /dev/sda3" && read rootpart
+echo -n "Your partitions will be formatted. ARE YOU SURE THAT YOU WANNA FORMAT YOUR PARTITIONS? (Y/N) " && read formatforsure
 case $formatforsure in
 	"Y") echo "Partitions will be formatted and mounted...";
 	continue;;
@@ -37,14 +54,16 @@ echo "Done."
 echo "Generating fstab"
 fstabgen -U /mnt >> /mnt/etc/fstab
 echo "Done."
-while true; do
-read -r "Do you wanna chroot for second procedure? (Y/N) " chrootforsure
+echo -n "Do you wanna chroot into your new system?? (Y/N) " && read formatforsure
 case $formatforsure in
-	[yY] ) echo "Chrooting...";
-	break;;
-	[nN] ) echo "Exiting...";
+	"Y") echo "Chrooting...";
+	continue;;
+	"N") echo "Exiting.";
 	exit;;
-	* ) echo "Invalid answer";;	 
+	"y") echo "Chrooting...";
+	continue;;
+	"n") echo "Exiting.";
+	exit;;
+	* ) echo "Invalid answer";;
 esac
-done
 artix-chroot /mnt
