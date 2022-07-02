@@ -1,6 +1,6 @@
 #!/bin/sh
 echo "Checking for internet connection..."
-ping -c 4 google.com
+ping -c 4 gnu.org
 echo "Test succesful."
 lsblk
 echo "What is your swap partition? ex /dev/sda1"
@@ -9,16 +9,18 @@ echo "What is your boot partition? ex /dev/sda2"
 read -r bootpart
 echo "What is your root partition? ex /dev/sda3"
 read -r rootpart
-while true; do
-read -r "Your partitions will be formatted. ARE YOU SURE THAT YOU WANNA FORMAT YOUT PARTITIONS? (Y/N) " formatforsure
+echo -n "Your partitions will be formatted. ARE YOU SURE THAT YOU WANNA FORMAT YOUT PARTITIONS? (Y/N) " && read formatforsure
 case $formatforsure in
-	[yY] ) echo "Partitions will be formatted and mounted...";
-	break;;
-	[nN] ) echo "Exiting.";
+	"Y") echo "Partitions will be formatted and mounted...";
+	continue;;
+	"N") echo "Exiting.";
+	exit;;
+	"y") echo "Partitions will be formatted and mounted...";
+	continue;;
+	"n") echo "Exiting.";
 	exit;;
 	* ) echo "Invalid answer";;
 esac
-done
 mkswap $swappart
 mkfs.fat -F32 $bootpart
 mkfs.ext4 $rootpart
