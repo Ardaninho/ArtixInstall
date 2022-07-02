@@ -1,24 +1,6 @@
 #!/bin/sh
 echo "Welcome to Artix Linux install script!"
-echo "            'o'
-                 'ooo'
-                'ooxoo'
-               'ooxxxoo'
-              'oookkxxoo'
-             'oiioxkkxxoo'
-            ':;:iiiioxxxoo'
-               `'.;::ioxxoo'
-          '-.      `':;jiooo'
-         'oooio-..     `'i:io'
-        'ooooxxxxoio:,.   `'-;'
-       'ooooxxxxxkkxoooIi:-.  `'
-      'ooooxxxxxkkkkxoiiiiiji'
-     'ooooxxxxxkxxoiiii:'`     .i'
-    'ooooxxxxxoi:::'`       .;ioxo'
-   'ooooxooi::'`         .:iiixkxxo'
-  'ooooi:'`                `'';ioxxo'
- 'i:'`                          '':io'
-'`                                   `'"
+neofetch
 echo "Checking for internet connection..."
 ping -c 4 gnu.org
 echo "Test succesful."
