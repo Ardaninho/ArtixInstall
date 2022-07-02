@@ -5,9 +5,9 @@ echo "Checking for internet connection..."
 ping -c 4 gnu.org
 echo "Test succesful."
 lsblk
-echo "What is your swap partition? ex /dev/sda1" && read swappart
-echo "What is your boot partition? ex /dev/sda2" && read bootpart
-echo "What is your root partition? ex /dev/sda3" && read rootpart
+echo -n "What is your swap partition? ex /dev/sda1" && read swappart
+echo -n "What is your boot partition? ex /dev/sda2" && read bootpart
+echo -n "What is your root partition? ex /dev/sda3" && read rootpart
 echo -n "Your partitions will be formatted. ARE YOU SURE THAT YOU WANNA FORMAT YOUR PARTITIONS? (Y/N) " && read formatforsure
 case $formatforsure in
 	"Y") echo "Partitions will be formatted and mounted...";
