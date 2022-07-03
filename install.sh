@@ -70,6 +70,7 @@ artix-chroot /mnt sh -c "passwd $username"
 echo "Network Configuration"
 echo "Change your hostname. Opening nano in 5 seconds..."
 artix-chroot /mnt sh -c "nano /etc/conf.d/hostname"
+artix-chroot /mnt sh -c "printf "127.0.0.1 localhost\n::1 localhost" >> /etc/hosts"
 echo "Installing DHCP client..."
 artix-chroot /mnt sh -c "pacman -S dhcpcd"
 ip a
