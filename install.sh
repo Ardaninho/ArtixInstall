@@ -52,7 +52,9 @@ sleep 5
 artix-chroot /mnt sh -c "nano /etc/locale.gen"
 locale-gen
 echo "Installing bootloader... Default bootloader will be GRUB."
-artix-chroot /mnt sh -c "pacman -S grub os-prober efibootmgr:grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id-grub:grub-mkconfig -o /boot/grub/grub.cfg"
+artix-chroot /mnt sh -c "pacman -S grub os-prober efibootmgr"
+artix-chroot /mnt sh -c "grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id-grub"
+artix-chroot /mnt sh -c "grub-mkconfig -o /boot/grub/grub.cfg"
 echo "Installation of Artix Linux is done! You can reboot your system now."
 echo "Exiting."
 exit
