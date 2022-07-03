@@ -65,6 +65,8 @@ echo "For your user, which shell should be the default? ex, /bin/bash"
 read -r usershell
 echo "Adding user $username, with groups $usergroups, and shell $usershell..."
 artix-chroot /mnt sh -c "useradd -m -G $usergroups -s $usershell $username"
+echo "Changing password for $username"
+artix-chroot /mnt sh -c "passwd $username"
 echo "Network Configuration"
 echo "Change your hostname. Opening nano in 5 seconds..."
 artix-chroot /mnt sh -c "nano /etc/conf.d/hostname"
