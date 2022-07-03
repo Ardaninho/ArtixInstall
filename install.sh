@@ -57,20 +57,12 @@ artix-chroot /mnt sh -c "grub-install --target=x86_64-efi --efi-directory=/boot 
 artix-chroot /mnt sh -c "grub-mkconfig -o /boot/grub/grub.cfg"
 echo "Changing password for root."
 artix-chroot /mnt sh -c "passwd root"
-echo "Adding your user. What will the name be? ex, user"
-read -r username
-echo "For your user, which groups will your user be in? ex, wheel,audio,video,optical,storage,floppy,usb"
-read -r usergroups
-echo "For your user, which shell should be the default? ex, /bin/bash"
-read -r usershell
-echo "Adding user $username, with groups $usergroups, and shell $usershell..."
-artix-chroot /mnt sh -c "useradd -m -G $usergroups -s $usershell $username"
-echo "Changing password for $username"
-artix-chroot /mnt sh -c "passwd $username"
 echo "Network Configuration"
 echo "Change your hostname. Opening nano in 5 seconds..."
+sleep 5
 artix-chroot /mnt sh -c "nano /etc/conf.d/hostname"
-artix-chroot /mnt sh -c "printf "127.0.0.1 localhost\n::1 localhost" >> /etc/hosts"
+hostname > /etc/hostname
+artix-chroot /mnt sh -c "printf "127.0.0.1 localhost\n::1 localhost" > /etc/hosts"
 echo "Installing DHCP client..."
 artix-chroot /mnt sh -c "pacman -S dhcpcd"
 ip a
