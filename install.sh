@@ -57,6 +57,28 @@ artix-chroot /mnt sh -c "grub-install --target=x86_64-efi --efi-directory=/boot 
 artix-chroot /mnt sh -c "grub-mkconfig -o /boot/grub/grub.cfg"
 echo "Changing password for root."
 artix-chroot /mnt sh -c "passwd root"
+echo "Adding your user. What will the name be? ex, user"
+read -r username
+echo "For your user, which groups will your user be in? ex, wheel,audio,video,optical,storage,floppy,usb"
+read -r usergroups
+echo "For your user, which shell should be the default? ex, /bin/bash"
+read -r usershell
+echo "Adding user $username, with groups $usergroups, and shell $usershell..."
+artix-chroot /mnt sh -c "useradd -m -G $usergroups -s $usershell $username"
+echo "Network Configuration"
+echo "Change your hostname. Opening nano in 5 seconds..."
+artix-chroot /mnt sh -c "nano /etc/conf.d/hostname"
+echo "Installing DHCP client..."
+artix-chroot /mnt sh -c "pacman -S dhcpcd"
+ip a
+echo "Whats your network interface? Note that "lo" does not count. ex, eth0"
+read -r networkinterface
+echo "Linking network interface..."
+ln -s /etc/init.d/net.lo /etc/init.d/net.$networkinterface
+rc-update add net.$networkinterface default
 echo "Installation of Artix Linux is done! You can reboot your system now."
+echo "Unmounting drives..."
+umount -l /mnt/boot
+umount -R /mnt
 echo "Exiting."
 exit
