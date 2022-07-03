@@ -61,7 +61,7 @@ echo "Network Configuration"
 echo "Change your hostname. Opening nano in 5 seconds..."
 sleep 5
 artix-chroot /mnt sh -c "nano /etc/conf.d/hostname"
-hostname > /etc/hostname
+artix-chroot /mnt sh -c "hostname > /etc/hostname"
 artix-chroot /mnt sh -c "printf "127.0.0.1 localhost\n::1 localhost" > /etc/hosts"
 echo "Installing DHCP client..."
 artix-chroot /mnt sh -c "pacman -S dhcpcd"
@@ -69,8 +69,8 @@ ip a
 echo "Whats your network interface? Note that "lo" does not count. ex, eth0"
 read -r networkinterface
 echo "Linking network interface..."
-ln -s /etc/init.d/net.lo /etc/init.d/net.$networkinterface
-rc-update add net.$networkinterface default
+artix-chroot /mnt sh -c "ln -s /etc/init.d/net.lo /etc/init.d/net.$networkinterface"
+artix-chroot /mnt sh -c "rc-update add net.$networkinterface default"
 echo "Installation of Artix Linux is done! You can reboot your system now."
 echo "Unmounting drives..."
 umount -l /mnt/boot
