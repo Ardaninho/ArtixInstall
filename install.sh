@@ -31,7 +31,7 @@ mkdir -p /mnt/boot
 mount $bootpart /mnt/boot
 swapon $swappart
 echo "Installing base system..."
-baseswap /mnt base base-devel openrc elogind-openrc
+basestrap /mnt base base-devel openrc elogind-openrc
 echo "Done."
 echo "Installing kernel..."
 basestrap /mnt linux linux-firmware
