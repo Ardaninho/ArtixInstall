@@ -5,10 +5,13 @@ echo "Checking for internet connection..."
 ping -c 4 gnu.org
 echo "Test succesful."
 lsblk
-echo -n "What is your swap partition? ex /dev/sda1" && read swappart
-echo -n "What is your boot partition? ex /dev/sda2" && read bootpart
-echo -n "What is your root partition? ex /dev/sda3" && read rootpart
-echo -n "Your partitions will be formatted. ARE YOU SURE THAT YOU WANNA FORMAT YOUR PARTITIONS? (Y/N) " && read formatforsure
+echo "What is your swap partition? ex /dev/sda1"
+read -r swappart
+echo "What is your boot partition? ex /dev/sda2"
+read -r bootpart
+echo "What is your root partition? ex /dev/sda3"
+read -r rootpart
+echo "Your partitions will be formatted. ARE YOU SURE THAT YOU WANNA FORMAT YOUR PARTITIONS? (Y/N) " && read formatforsure
 case $formatforsure in
 	"Y") echo "Partitions will be formatted and mounted...";
 	continue;;
@@ -36,16 +39,5 @@ echo "Done."
 echo "Generating fstab"
 fstabgen -U /mnt >> /mnt/etc/fstab
 echo "Done."
-echo -n "Do you wanna chroot into your new system?? (Y/N) " && read formatforsure
-case $formatforsure in
-	"Y") echo "Chrooting...";
-	continue;;
-	"N") echo "Exiting.";
-	exit;;
-	"y") echo "Chrooting...";
-	continue;;
-	"n") echo "Exiting.";
-	exit;;
-	* ) echo "Invalid answer";;
-esac
+echo "You will be chrooted into your new system."
 artix-chroot /mnt
