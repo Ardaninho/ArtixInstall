@@ -1,6 +1,5 @@
 #!/bin/sh
 echo "Welcome to Artix Linux install script!"
-neofetch
 echo "Checking for internet connection..."
 ping -c 4 gnu.org
 echo "Test succesful."
@@ -32,20 +31,17 @@ mount $bootpart /mnt/boot
 swapon $swappart
 echo "Installing base system..."
 basestrap /mnt base base-devel openrc elogind-openrc
-echo "Done."
 echo "Installing kernel..."
 basestrap /mnt linux linux-firmware
-echo "Done."
 echo "Generating fstab"
 fstabgen -U /mnt >> /mnt/etc/fstab
-echo "Done."
 echo "You will be chrooted into your new system."
 echo "Setting up timezone. What is your timezone? ex Europe/Brussels"
 read -r timezone
 echo "Linking $timezone to /etc/localtime..."
 artix-chroot /mnt sh -c "ln -sf /usr/share/zoneinfo/$timezone /etc/localtime"
-echo "hwclock --systohc..."
 artix-chroot /mnt sh -c "hwclock --systohc"
+echo "Installing nano"
 artix-chroot /mnt sh -c "pacman -S nano"
 echo "Add your locales in /etc/locale.gen. Opening nano in 5 seconds..."
 sleep 5
